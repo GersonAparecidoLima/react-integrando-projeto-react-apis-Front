@@ -1,0 +1,113 @@
+/* Estilos para a página de lista de usuários */ 
+
+.listaUsuarioContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+  background-color: #f9f9f9; /* Fundo claro para destacar o conteúdo */
+  border-radius: 8px; /* Bordas arredondadas para o contêiner */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333; /* Cor escura para o título */
+  font-weight: bold;
+}
+
+.tabelaUsuarios {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+.tabelaUsuarios th,
+.tabelaUsuarios td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.tituloColuna {
+  background-color: #4CAF50; /* Cor verde para o título da coluna */
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.usuarioNome, .usuarioEmail {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.usuarioNome {
+  max-width: 250px;
+}
+
+.usuarioEmail {
+  max-width: 300px;
+}
+
+.tabelaUsuarios tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabelaUsuarios tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.tabelaUsuarios td,
+.tabelaUsuarios th {
+  border-radius: 6px;
+  transition: all 0.3s ease; /* Transição suave nas bordas */
+}
+
+/* Efeito de foco nas células da tabela */
+.tabelaUsuarios tr:hover td {
+  background-color: #e0e0e0; /* Mudança de cor ao passar o mouse */
+  transform: scale(1.02); /* Leve aumento para dar um efeito de destaque */
+}
+
+@media (max-width: 768px) {
+  .tabelaUsuarios th, .tabelaUsuarios td {
+    padding: 8px 10px;
+    font-size: 0.9rem; /* Fontes menores em dispositivos móveis */
+  }
+
+  .usuarioNome, .usuarioEmail {
+    font-size: 1rem;
+    max-width: 200px; /* Limitar o tamanho máximo para telas pequenas */
+  }
+
+  h2 {
+    font-size: 1.6rem; /* Reduzir o tamanho do título para dispositivos móveis */
+  }
+}
+
+@media (max-width: 480px) {
+  .listaUsuarioContainer {
+    padding: 10px; /* Reduzir o padding em telas menores */
+  }
+
+  .tabelaUsuarios {
+    font-size: 0.85rem; /* Reduzir o tamanho da fonte da tabela em dispositivos móveis */
+  }
+
+  .usuarioNome, .usuarioEmail {
+    max-width: 150px; /* Limitar ainda mais as larguras em telas muito pequenas */
+  }
+  
+}
