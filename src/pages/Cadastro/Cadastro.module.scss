@@ -50,4 +50,15 @@ h2 {
   &:hover {
     background-color: #218838;
   }
+
+  .sucesso {
+    color: green;
+    margin-bottom: 10px;
+  }
+  
+  .erro {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
 }

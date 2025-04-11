@@ -7,18 +7,15 @@ interface Campo {
   nome: string;
   valor: string;
   required: boolean;
- 
 }
 
 interface Props {
   campos: Campo[];
   onSubmit: (dados: { [key: string]: string }) => void;
-  tipoFormulario: string;
-  
+  tipoFormulario: string; // pode usar isso pra personalizar o texto do botão, etc.
 }
 
 export default function FormularioGenerico({ campos, onSubmit, tipoFormulario }: Props) {
-  // Estado dos dados do formulário
   const [dadosFormulario, setDadosFormulario] = useState<Record<string, string>>(
     campos.reduce((acc, campo) => {
       acc[campo.nome] = campo.valor || '';
@@ -26,10 +23,8 @@ export default function FormularioGenerico({ campos, onSubmit, tipoFormulario }:
     }, {} as Record<string, string>)
   );
 
-  // Estado para armazenar os erros de validação
   const [erros, setErros] = useState<Record<string, string>>({});
 
-  // Função para atualizar o estado conforme o usuário digita
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setDadosFormulario((prevState) => ({
@@ -38,26 +33,23 @@ export default function FormularioGenerico({ campos, onSubmit, tipoFormulario }:
     }));
   };
 
-  // Função para validar o formulário
   const validarFormulario = () => {
     const novosErros: Record<string, string> = {};
 
-    // Itera sobre os campos e valida se os campos obrigatórios estão preenchidos
     campos.forEach((campo) => {
       if (campo.required && !dadosFormulario[campo.nome]) {
         novosErros[campo.nome] = `${campo.label} é obrigatório.`;
       }
     });
 
-    setErros(novosErros); // Atualiza o estado de erros
-    return Object.keys(novosErros).length === 0; // Se não houver erros, o formulário é válido
+    setErros(novosErros);
+    return Object.keys(novosErros).length === 0;
   };
 
-  // Função para enviar os dados do formulário
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Previne o comportamento padrão de envio do formulário
+    e.preventDefault();
     if (validarFormulario()) {
-      onSubmit(dadosFormulario); // Envia os dados para o componente pai
+      onSubmit(dadosFormulario);
     }
   };
 
@@ -72,12 +64,16 @@ export default function FormularioGenerico({ campos, onSubmit, tipoFormulario }:
             id={campo.nome}
             value={dadosFormulario[campo.nome]}
             onChange={handleInputChange}
-            required
+            required={campo.required}
           />
-          {/* Exibindo a mensagem de erro se houver */}
           {erros[campo.nome] && <div className={style.popError}>{erros[campo.nome]}</div>}
         </div>
-      ))}     
+      ))}
+
+      {/* Botão de envio dentro do formulário */}
+      <button type="submit" className={style.submitButton}>
+        {tipoFormulario === 'cadastro' ? 'Cadastrar' : 'Enviar'}
+      </button>
     </form>
   );
 }
