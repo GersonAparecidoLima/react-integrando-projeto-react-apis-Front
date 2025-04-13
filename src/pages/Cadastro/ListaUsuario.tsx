@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './ListaUsuario.module.scss';
 
 type Usuario = {
-  id: number;
+  id: string; // Alterado para string (UUID)
   nome: string;
 };
 
@@ -22,7 +22,7 @@ const ListaUsuario = () => {
     }
   };
 
-  const deletarUsuario = async (id: number) => {
+  const deletarUsuario = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
         method: 'DELETE',
@@ -34,7 +34,7 @@ const ListaUsuario = () => {
     }
   };
 
-  const editarUsuario = (id: number) => {
+  const editarUsuario = (id: string) => {
     alert(`Editar usuário com ID: ${id}`);
     // Aqui você pode redirecionar ou abrir um modal com o formulário de edição
   };
@@ -59,18 +59,18 @@ const ListaUsuario = () => {
             <tr key={usuario.id}>
               <td className={style.usuarioNome}>{usuario.nome}</td>
               <td className={style.colunaAcao}>
-                  <button
-                    className={`${style.botaoAcao} ${style.botaoEditar}`}
-                    onClick={() => editarUsuario(usuario.id)}
-                  >
-                    Alterar
-                  </button>
-                  <button
-                    className={`${style.botaoAcao} ${style.botaoDeletar}`}
-                    onClick={() => deletarUsuario(usuario.id)}
-                  >
-                    Deletar
-                  </button>
+                <button
+                  className={`${style.botaoAcao} ${style.botaoEditar}`}
+                  onClick={() => editarUsuario(usuario.id)}
+                >
+                  Alterar
+                </button>
+                <button
+                  className={`${style.botaoAcao} ${style.botaoDeletar}`}
+                  onClick={() => deletarUsuario(usuario.id)} // Passando o ID como string
+                >
+                  Deletar
+                </button>
               </td>
             </tr>
           ))}
