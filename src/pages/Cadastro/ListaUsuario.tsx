@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './ListaUsuario.module.scss';
 
 type Usuario = {
+  id: number;
   nome: string;
 };
 
@@ -12,18 +13,30 @@ const ListaUsuario = () => {
   const fetchUsuarios = async () => {
     try {
       const response = await fetch('http://localhost:3000/usuarios');
-      if (!response.ok) {
-        throw new Error('Erro ao carregar usuários');
-      }
+      if (!response.ok) throw new Error('Erro ao carregar usuários');
       const data: Usuario[] = await response.json();
       setUsuarios(data);
     } catch (error) {
-      if (error instanceof Error) {
-        setErro(error.message);
-      } else {
-        setErro('Erro desconhecido');
-      }
+      if (error instanceof Error) setErro(error.message);
+      else setErro('Erro desconhecido');
     }
+  };
+
+  const deletarUsuario = async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Erro ao deletar usuário');
+      setUsuarios(usuarios.filter(usuario => usuario.id !== id));
+    } catch (error) {
+      if (error instanceof Error) setErro(error.message);
+    }
+  };
+
+  const editarUsuario = (id: number) => {
+    alert(`Editar usuário com ID: ${id}`);
+    // Aqui você pode redirecionar ou abrir um modal com o formulário de edição
   };
 
   useEffect(() => {
@@ -38,14 +51,27 @@ const ListaUsuario = () => {
         <thead>
           <tr>
             <th className={style.tituloColuna}>Nome</th>
-
+            <th className={style.tituloColunaAcao}>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {usuarios.map((usuario, index) => (
-            <tr key={index}>
+          {usuarios.map((usuario) => (
+            <tr key={usuario.id}>
               <td className={style.usuarioNome}>{usuario.nome}</td>
-
+              <td className={style.colunaAcao}>
+                  <button
+                    className={`${style.botaoAcao} ${style.botaoEditar}`}
+                    onClick={() => editarUsuario(usuario.id)}
+                  >
+                    Alterar
+                  </button>
+                  <button
+                    className={`${style.botaoAcao} ${style.botaoDeletar}`}
+                    onClick={() => deletarUsuario(usuario.id)}
+                  >
+                    Deletar
+                  </button>
+              </td>
             </tr>
           ))}
         </tbody>
