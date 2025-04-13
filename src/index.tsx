@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Usando a versão correta do ReactDOM para v18
 import './index.css'; // Importando os estilos principais
-import Router from './routes'; // Importando o Router para controlar as rotas
+import App from './pages/App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Router /> {/* Substituindo o App por Router */}
+    <App /> {/* Substituindo o Router por App.tsx */}
   </React.StrictMode>
 );
