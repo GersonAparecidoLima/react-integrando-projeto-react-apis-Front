@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import style from './EditarCadastro.module.scss';
 import FormularioGenerico from '../../components/FormularioGenerico/FormularioGenerico';
 
@@ -9,6 +9,7 @@ type Usuario = {
 
 function EditarCadastro() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [sucesso, setSucesso] = useState('');
   const [erro, setErro] = useState('');
@@ -44,6 +45,12 @@ function EditarCadastro() {
       const data = await response.json();
       setSucesso(data.mensagem || 'Usuário atualizado com sucesso!');
       setErro('');
+
+        // Redireciona após sucesso
+        setTimeout(() => {
+        navigate('/lista-usuario');
+      }, 1000); // Espera 1 segundo antes de redirecionar (opcional)
+
     } catch (error) {
       console.error('Erro:', error);
       setErro('Falha ao atualizar usuário. Tente novamente.');
