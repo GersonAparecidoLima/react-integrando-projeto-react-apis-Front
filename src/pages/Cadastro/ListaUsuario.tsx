@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import style from './ListaUsuario.module.scss';
+import { useNavigate } from 'react-router-dom';
+
+
 
 type Usuario = {
   id: string; // Alterado para string (UUID)
@@ -9,6 +12,10 @@ type Usuario = {
 const ListaUsuario = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [erro, setErro] = useState('');
+
+  
+  const navigate = useNavigate();
+
 
   const fetchUsuarios = async () => {
     try {
@@ -40,8 +47,7 @@ const ListaUsuario = () => {
   
 
   const editarUsuario = (id: string) => {
-    alert(`Editar usuário com ID: ${id}`);
-    // Aqui você pode redirecionar ou abrir um modal com o formulário de edição
+    navigate(`/editar/${id}`);
   };
 
   useEffect(() => {

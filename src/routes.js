@@ -5,6 +5,7 @@ import Inicio from './pages/Inicio';  // Importando o componente Inicio
 import Menu from './components/Menu';  // Importando o Menu
 import ListaUsuario from './pages/Cadastro/ListaUsuario';  // Importando a página ListaUsuario
 import Produto from './pages/Produto/Produto';  // Importando a página Produto
+import EditarCadastro from './pages/Cadastro/EditarCadastro'; // <-- Adicione essa importação
 
 export default function AppRouter() {
   return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/produto' element={<Produto />} /> {/* Rota para Produto */}
           <Route path='/lista-usuario' element={<ListaUsuario />} /> {/* Rota para ListaUsuario */}
+          <Route path='/editar/:id' element={<EditarCadastro />} /> {/* <-- ADICIONE ESTA LINHA */}
         </Routes>
       </div>
     </Router>

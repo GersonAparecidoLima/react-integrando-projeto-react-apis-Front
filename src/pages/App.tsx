@@ -5,6 +5,7 @@ import Produto from '../pages/Produto/Produto'; // Importando o componente Produ
 import ListaUsuario from './Cadastro/ListaUsuario'; // Importando o componente ListaUsuario
 import Menu from '../components/Menu'; // Importando o componente Menu
 import style from './App.module.scss'; // Importando o estilo do App
+import EditarCadastro from './Cadastro/EditarCadastro';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/produto" element={<Produto />} />
           <Route path="/lista-usuario" element={<ListaUsuario />} />
           <Route path="/" element={<h1>Bem-vindo ao Meu Aplicativo</h1>} />
+          <Route path="/editar/:id" element={<EditarCadastro />} />
         </Routes>
       </div>
     </Router>

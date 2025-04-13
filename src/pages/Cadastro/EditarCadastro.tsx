@@ -1,58 +1,86 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import style from './EditarCadastro.module.scss';
 import FormularioGenerico from '../../components/FormularioGenerico/FormularioGenerico';
 
-function Cadastro() {
+type Usuario = {
+  nome: string;
+};
+
+function EditarCadastro() {
+  const { id } = useParams<{ id: string }>();
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [sucesso, setSucesso] = useState('');
   const [erro, setErro] = useState('');
 
+  useEffect(() => {
+    if (id) {
+      fetch(`http://localhost:3000/usuarios/${id}`)
+        .then((response) => {
+          if (!response.ok) throw new Error('Erro ao buscar o usuário');
+          return response.json();
+        })
+        .then((data) => {
+          setUsuario(data);
+        })
+        .catch((err) => {
+          setErro(err.message);
+        });
+    }
+  }, [id]);
+
   async function handleSubmit(dados: { [key: string]: string }) {
     try {
-      const response = await fetch('http://localhost:3000/usuarios', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(dados),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Erro ao cadastrar usuário');
-      }
+      if (!response.ok) throw new Error('Erro ao atualizar o usuário');
 
       const data = await response.json();
-      console.log('Usuário cadastrado com sucesso:', data);
-      setSucesso(data.mensagem || 'Usuário cadastrado com sucesso!');
+      setSucesso(data.mensagem || 'Usuário atualizado com sucesso!');
       setErro('');
     } catch (error) {
       console.error('Erro:', error);
-      setErro('Falha ao cadastrar usuário. Tente novamente.');
+      setErro('Falha ao atualizar usuário. Tente novamente.');
       setSucesso('');
     }
   }
 
-  const campos = [
-    { label: 'Nome', tipo: 'text', nome: 'nome', valor: '', required: true },
-    { label: 'Email', tipo: 'email', nome: 'email', valor: '', required: true },
-    { label: 'Senha', tipo: 'password', nome: 'senha', valor: '', required: true },
-  ];
+  const campos = usuario
+    ? [
+        {
+          label: 'Nome',
+          tipo: 'text',
+          nome: 'nome',
+          valor: usuario.nome,
+          required: true,
+        },
+      ]
+    : [];
 
   return (
     <div className={style.cadastro}>
-      <h2>Cadastro de Usuário</h2>
+      <h2>Editar Cadastro</h2>
 
-      {/* Feedback visual */}
       {sucesso && <p className={style.sucesso}>{sucesso}</p>}
       {erro && <p className={style.erro}>{erro}</p>}
 
-      <FormularioGenerico 
-        campos={campos} 
-        onSubmit={handleSubmit} 
-        tipoFormulario="cadastro" 
-      />
+      {usuario ? (
+        <FormularioGenerico
+          campos={campos}
+          onSubmit={handleSubmit}
+          tipoFormulario="edicao"
+        />
+      ) : (
+        <p>Carregando dados...</p>
+      )}
     </div>
   );
 }
 
-export default Cadastro;
+export default EditarCadastro;
