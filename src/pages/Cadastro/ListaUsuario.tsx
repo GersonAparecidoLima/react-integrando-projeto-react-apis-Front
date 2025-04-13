@@ -23,6 +23,10 @@ const ListaUsuario = () => {
   };
 
   const deletarUsuario = async (id: string) => {
+    const confirmar = window.confirm('Você realmente deseja excluir este usuário?');
+  
+    if (!confirmar) return; // Se cancelar, sai da função
+  
     try {
       const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
         method: 'DELETE',
@@ -33,6 +37,7 @@ const ListaUsuario = () => {
       if (error instanceof Error) setErro(error.message);
     }
   };
+  
 
   const editarUsuario = (id: string) => {
     alert(`Editar usuário com ID: ${id}`);
