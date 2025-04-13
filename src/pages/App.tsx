@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Cadastro from '../pages/Cadastro/Cadastro'; // Importando o componente Cadastro
 import Produto from '../pages/Produto/Produto'; // Importando o componente Produto
-import ListaUsuario from '../pages/ListaUsuario/ListaUsuario'; // Importando o componente ListaUsuario
+import ListaUsuario from './Cadastro/ListaUsuario'; // Importando o componente ListaUsuario
 import Menu from '../components/Menu'; // Importando o componente Menu
 import style from './App.module.scss'; // Importando o estilo do App
 

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cadastro from './pages/Cadastro/Cadastro';  // Importando o componente Cadastro
 import Inicio from './pages/Inicio';  // Importando o componente Inicio
 import Menu from './components/Menu';  // Importando o Menu
-import ListaUsuario from './pages/ListaUsuario/ListaUsuario';  // Importando a página ListaUsuario
+import ListaUsuario from './pages/Cadastro/ListaUsuario';  // Importando a página ListaUsuario
 import Produto from './pages/Produto/Produto';  // Importando a página Produto
 
 export default function AppRouter() {
